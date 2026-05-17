@@ -64,7 +64,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c1',
     name: 'Sarah Jenkins (TechCorp)',
-    phone_number: '+1 (555) 019-2834',
+    phone_number: '+91 9705603881',
     avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
     kanban_stage: 'Negotiation',
     lead_score: 92,
@@ -250,7 +250,10 @@ export const getLocalContacts = (): Contact[] => {
     localStorage.setItem('sb_contacts', JSON.stringify(INITIAL_CONTACTS));
     return INITIAL_CONTACTS;
   }
-  return JSON.parse(data);
+  const parsed: Contact[] = JSON.parse(data);
+  const updated = parsed.map(c => c.id === 'c1' ? { ...c, phone_number: '+91 9705603881' } : c);
+  localStorage.setItem('sb_contacts', JSON.stringify(updated));
+  return updated;
 };
 
 export const saveLocalContacts = (contacts: Contact[]) => {
