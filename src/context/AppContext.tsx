@@ -14,6 +14,7 @@ import {
   saveLocalRules 
 } from '../lib/supabase';
 import { sendWhatsAppMessage } from '../lib/whatsapp';
+import { generateAIReply } from '../lib/gemini';
 import toast from 'react-hot-toast';
 
 interface AppContextType {
@@ -193,8 +194,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     toast.success('New automation rule activated');
   };
 
-  // Simulation Helper for incoming customer messages
-  const simulateCustomerMessage = (contactId: string, content: string) => {
+  // Simulation Helper for incoming customer messages with Fully Automated AI Auto-Reply
+  const simulateCustomerMessage = async (contactId: string, content: string) => {
+    const targetContact = contacts.find(c => c.id === contactId);
+    const contactName = targetContact?.name || 'Customer';
+
     const newMsg: Message = {
       id: `m_sim_${Date.now()}`,
       contact_id: contactId,
@@ -206,8 +210,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setMessages(prev => [...prev, newMsg]);
     setContacts(prev => prev.map(c => c.id === contactId ? { ...c, unread_count: c.unread_count + 1, last_message_at: new Date().toISOString() } : c));
-    toast(`New WhatsApp message from ${contacts.find(c => c.id === contactId)?.name || 'Customer'}`, { icon: '💬' });
+    toast(`New WhatsApp message from ${contactName}`, { icon: '💬' });
+
+    // 1. Set typing indicator
+    setIsTyping(true);
+
+    // 2. Generate Gemini AI Reply automatically
+    try {
+      const aiReplyText = await generateAIReply({
+        customerMessage: content,
+        tone: 'persuasive'
+      });
+
+      // 3. Send AI Reply automatically after a brief realistic delay
+      setTimeout(async () => {
+        const aiMessage: Message = {
+          id: `m_auto_${Date.now()}`,
+          contact_id: contactId,
+          sender_type: 'business',
+          content: aiReplyText,
+          status: 'delivered',
+          sentiment: 'positive',
+          ai_generated: true,
+          created_at: new Date().toISOString()
+        };
+
+        setMessages(prev => [...prev, aiMessage]);
+        setIsTyping(false);
+        toast.success(`Gemini AI Auto-Replied to ${contactName}`, { icon: '🤖' });
+
+        // Try sending via WhatsApp API layer if connected
+        try {
+          if (targetContact) {
+            await sendWhatsAppMessage({
+              to: targetContact.phone_number,
+              type: 'text',
+              content: aiReplyText
+            });
+          }
+        } catch (e) {
+          // Silent fallback
+        }
+      }, 1500);
+
+    } catch (err) {
+      setIsTyping(false);
+    }
   };
+
 
   return (
     <AppContext.Provider value={{

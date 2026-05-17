@@ -33,7 +33,8 @@ export const ChatView: React.FC = () => {
     activeMessages, 
     sendMessage, 
     products, 
-    updateContactStage 
+    updateContactStage,
+    isTyping
   } = useApp();
 
   // Local Component States
@@ -54,7 +55,7 @@ export const ChatView: React.FC = () => {
   // Auto scroll to bottom of chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [activeMessages]);
+  }, [activeMessages, isTyping]);
 
   // Voice recording timer simulation
   useEffect(() => {
@@ -361,6 +362,25 @@ export const ChatView: React.FC = () => {
                 );
               })
             )}
+
+            {isTyping && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex justify-start"
+              >
+                <div className="bg-wa-secondary text-wa-text rounded-2xl rounded-tl-none border border-white/5 px-4 py-3 shadow-md flex items-center gap-2">
+                  <Bot className="w-4 h-4 text-wa-green animate-bounce" />
+                  <span className="text-xs font-semibold text-wa-green">Gemini AI is analyzing and typing...</span>
+                  <div className="flex gap-1 ml-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-wa-green animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-wa-green animate-pulse delay-150"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-wa-green animate-pulse delay-300"></span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
             <div ref={messagesEndRef} />
           </div>
 
