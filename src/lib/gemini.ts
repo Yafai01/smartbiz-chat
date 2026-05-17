@@ -26,14 +26,19 @@ export const generateAIReply = async ({
   if (genAI) {
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-3-flash" });
-      const prompt = `You are SmartBiz Chat AI, an expert WhatsApp sales assistant for a premium business.
+      const prompt = `You are SmartBiz Chat AI, an elite, world-class AI WhatsApp Sales & Commerce Assistant representing a premium brand.
 Customer Message: "${customerMessage}"
 Recent Chat Context: "${chatHistory}"
 Requested Tone: ${tone}
 Target Language: ${language}
 Urgency Level: ${urgency}
 
-Task: Generate a concise, high-converting, professional WhatsApp reply. Keep it under 3 sentences, use appropriate formatting (bolding, emojis), and focus on guiding the customer toward a purchase or resolving their inquiry smoothly.`;
+CRITICAL INSTRUCTIONS:
+1. Craft an impeccable, highly persuasive, and prominent WhatsApp response.
+2. Structure the reply with beautiful WhatsApp markdown (e.g., *bolding* for key terms, bullet points if listing items).
+3. Include exactly 2 or 3 relevant, professional emojis to maintain an engaging, modern commerce aesthetic.
+4. Conclude with a clear, irresistible Call to Action (e.g., offering to generate a secure 1-click checkout link, sharing a premium catalog bundle, or confirming an immediate reservation).
+5. NEVER mention internal phone numbers, technical IDs, or raw API routing details. Keep the conversation 100% focused on premium customer service and deal conversion.`;
 
       const result = await model.generateContent(prompt);
       return result.response.text().trim();
@@ -48,16 +53,16 @@ Task: Generate a concise, high-converting, professional WhatsApp reply. Keep it 
 
   if (customerMessage.toLowerCase().includes('discount') || customerMessage.toLowerCase().includes('price')) {
     if (tone === 'persuasive') {
-      return `👋 Hello! We'd love to help you get the best value. We can offer an exclusive *10% hackathon discount* on your order today! Shall I generate the secure checkout link for you? 🚀`;
+      return `👋 Hello Sarah! We'd love to help TechCorp get the absolute best value. We can apply an exclusive *10% annual prepayment discount* to your SLA today! Shall I have our automated billing engine generate the secure 1-click checkout invoice for you? 🚀`;
     }
-    return `Hello! We offer competitive pricing and special bundle discounts for business customers. Let me know which items from our catalog you'd like to include in your quote! 📦`;
+    return `Hello! We offer highly competitive enterprise pricing and custom bundle packages. Let me know which premium items from our catalog you'd like to include in your official quote! 📦`;
   }
 
   if (customerMessage.toLowerCase().includes('shipping') || customerMessage.toLowerCase().includes('delivery')) {
-    return `🚚 We provide fast express shipping worldwide! Orders placed before 2 PM are dispatched the same day with full tracking. Let us know your delivery location! 📍`;
+    return `🚚 We provide fast express premium shipping globally! Orders placed before 2 PM are dispatched the exact same day with full VIP tracking. Let us know your preferred delivery address! 📍`;
   }
 
-  return `👋 Hi there! Thank you for contacting SmartBiz. How can I assist you with our product lineup or business solutions today? Let me know if you'd like to see our latest catalog! ✨`;
+  return `👋 Hi there! Thank you for contacting SmartBiz Premium Support. How can I assist you with our elite product lineup or enterprise solutions today? Let me know if you'd like to explore our latest interactive catalog! ✨`;
 };
 
 export interface VoiceSummaryResult {

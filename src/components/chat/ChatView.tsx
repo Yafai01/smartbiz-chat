@@ -225,7 +225,7 @@ export const ChatView: React.FC = () => {
 
                     <div className="flex items-center justify-between gap-2">
                       <p className="text-xs text-wa-subtext truncate">
-                        {contact.ai_summary || contact.phone_number}
+                        {contact.ai_summary || 'Verified WhatsApp Cloud Lead'}
                       </p>
                       {/* Stage Badge */}
                       <Badge 
@@ -268,7 +268,7 @@ export const ChatView: React.FC = () => {
               <div>
                 <h3 className="font-semibold text-wa-text text-sm flex items-center gap-2">
                   {activeContact.name}
-                  <span className="text-[10px] font-normal text-wa-subtext">({activeContact.phone_number})</span>
+                  <span className="text-[10px] font-bold text-wa-green bg-wa-green/10 px-2 py-0.5 rounded-full border border-wa-green/20">Verified Cloud Lead</span>
                 </h3>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-wa-green animate-pulse"></span>

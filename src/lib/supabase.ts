@@ -64,7 +64,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c1',
     name: 'Sarah Jenkins (TechCorp)',
-    phone_number: '+91 9705603881',
+    phone_number: '@techcorp_enterprise',
     avatar_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150',
     kanban_stage: 'Negotiation',
     lead_score: 92,
@@ -76,7 +76,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c2',
     name: 'Michael Chang',
-    phone_number: '+1 (555) 014-4920',
+    phone_number: '@michael_premium',
     avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150',
     kanban_stage: 'Interested',
     lead_score: 78,
@@ -88,7 +88,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c3',
     name: 'Emma Watson',
-    phone_number: '+44 20 7946 0921',
+    phone_number: '@emma_boutique',
     avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
     kanban_stage: 'New Lead',
     lead_score: 65,
@@ -100,7 +100,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c4',
     name: 'David Rodriguez',
-    phone_number: '+34 600 555 123',
+    phone_number: '@david_vip',
     avatar_url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150',
     kanban_stage: 'Won',
     lead_score: 95,
@@ -112,7 +112,7 @@ const INITIAL_CONTACTS: Contact[] = [
   {
     id: 'c5',
     name: 'Alex Mercer',
-    phone_number: '+1 (555) 018-9933',
+    phone_number: '@alex_mercer',
     avatar_url: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150',
     kanban_stage: 'Lost',
     lead_score: 25,
@@ -251,7 +251,14 @@ export const getLocalContacts = (): Contact[] => {
     return INITIAL_CONTACTS;
   }
   const parsed: Contact[] = JSON.parse(data);
-  const updated = parsed.map(c => c.id === 'c1' ? { ...c, phone_number: '+91 9705603881' } : c);
+  const updated = parsed.map(c => {
+    if (c.id === 'c1') return { ...c, phone_number: '@techcorp_enterprise' };
+    if (c.id === 'c2') return { ...c, phone_number: '@michael_premium' };
+    if (c.id === 'c3') return { ...c, phone_number: '@emma_boutique' };
+    if (c.id === 'c4') return { ...c, phone_number: '@david_vip' };
+    if (c.id === 'c5') return { ...c, phone_number: '@alex_mercer' };
+    return c;
+  });
   localStorage.setItem('sb_contacts', JSON.stringify(updated));
   return updated;
 };
