@@ -1,0 +1,19 @@
+{
+  "name": "smartbiz-chat-server",
+  "version": "1.0.0",
+  "description": "SmartBiz Chat WhatsApp Webhook & AI Backend",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "axios": "^1.7.9",
+    "@google/generative-ai": "^0.21.0",
+    "@supabase/supabase-js": "^2.48.0"
+  }
+}

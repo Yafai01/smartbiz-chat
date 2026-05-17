@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-wa-dark-bg text-wa-text antialiased selection:bg-wa-green selection:text-black font-sans;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Custom Scrollbar for WhatsApp style */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0B141A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202C33;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #374248;
+}
+
+/* Glassmorphism utilities */
+.glass-panel {
+  background: rgba(17, 27, 33, 0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(32, 44, 51, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
