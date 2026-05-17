@@ -272,7 +272,10 @@ export const ChatView: React.FC = () => {
                 </h3>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="w-2 h-2 rounded-full bg-wa-green animate-pulse"></span>
-                  <p className="text-xs text-wa-subtext">Online • WhatsApp Cloud API</p>
+                  <p className="text-xs text-wa-green font-semibold flex items-center gap-1">
+                    <Bot className="w-3.5 h-3.5" />
+                    <span>Gemini AI Active (Fully Autonomous Mode)</span>
+                  </p>
                 </div>
               </div>
             </div>
@@ -382,59 +385,6 @@ export const ChatView: React.FC = () => {
             )}
 
             <div ref={messagesEndRef} />
-          </div>
-
-          {/* Gemini AI Reply Assistant Toolbar */}
-          <div className="bg-wa-secondary border-t border-b border-white/5 p-4 flex flex-wrap items-center justify-between gap-3 shadow-lg z-20">
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400 bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-xl">
-                <Sparkles className="w-4 h-4 animate-spin" />
-                <span>AI Reply Assist</span>
-              </div>
-
-              {/* Tone Selector */}
-              <div className="flex items-center gap-1 bg-wa-dark-bg p-1 rounded-xl border border-white/5">
-                {(['professional', 'casual', 'persuasive'] as const).map((tone) => (
-                  <button
-                    key={tone}
-                    onClick={() => setSelectedTone(tone)}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-medium capitalize transition-colors ${
-                      selectedTone === tone ? 'bg-wa-secondary text-wa-green font-semibold shadow-sm' : 'text-wa-subtext hover:text-wa-text'
-                    }`}
-                  >
-                    {tone}
-                  </button>
-                ))}
-              </div>
-
-              {/* Language Selector */}
-              <div className="flex items-center gap-1.5 bg-wa-dark-bg px-3 py-1.5 rounded-xl border border-white/5">
-                <Globe className="w-3.5 h-3.5 text-wa-subtext" />
-                <select
-                  value={selectedLang}
-                  onChange={(e) => setSelectedLang(e.target.value)}
-                  className="bg-transparent text-xs text-wa-text focus:outline-none cursor-pointer"
-                >
-                  <option value="English" className="bg-wa-secondary">English</option>
-                  <option value="Spanish" className="bg-wa-secondary">Spanish</option>
-                  <option value="French" className="bg-wa-secondary">French</option>
-                  <option value="German" className="bg-wa-secondary">German</option>
-                  <option value="Portuguese" className="bg-wa-secondary">Portuguese</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Generate Action Button */}
-            <Button
-              variant="primary"
-              size="sm"
-              isLoading={isGeneratingAI}
-              onClick={handleGenerateAISuggestion}
-              className="flex items-center gap-1.5 shadow-md shadow-wa-green/10"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isGeneratingAI ? 'animate-spin' : ''}`} />
-              <span>Generate AI Reply</span>
-            </Button>
           </div>
 
           {/* Product Catalog Quick Send Menu */}
